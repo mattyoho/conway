@@ -15,5 +15,10 @@ describe Generation do
     it 'returns the next Generation' do
       generation.next.should be_a_kind_of(Generation)
     end
+
+    it "that generation doesn't blow up" do
+      next_generation = generation.next
+      expect { next_generation.next }.to_not raise_error
+    end
   end
 end
