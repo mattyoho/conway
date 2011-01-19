@@ -1,28 +1,19 @@
 require 'spec_helper'
 
 describe Generation do
-  let(:generation) { Generation.new }
+  let(:coordinates) { [Point.new(0,0), Point.new(1,1)] }
+  let(:generation)  { Generation.new(coordinates) }
+
+  describe "#cell_coordinates" do
+    it "returns points of current live cells" do
+      generation.cell_coordinates.should have(2).points
+      generation.cell_coordinates.should == coordinates
+    end
+  end
 
   describe '#next' do
     it 'returns the next Generation' do
       generation.next.should be_a_kind_of(Generation)
-    end
-
-    describe "cellular evolution" do
-      let(:cells) do
-        (1..3).map {|n| stub.tap {|s| s.should_receive(:evolve).and_return(:"cell#{n}") } }
-      end
-
-      before { generation.stub(:cells => cells) }
-
-      it "tells its cells to evolve" do
-        generation.next
-      end
-
-      it "provides the evolved cells to the next generation" do
-        new_cells = generation.next.cells
-        new_cells.should == [:cell1, :cell2, :cell3]
-      end
     end
   end
 end
