@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Conway
+
 describe RuleSet do
   let(:rule_set) { RuleSet.new }
   describe "#apply" do

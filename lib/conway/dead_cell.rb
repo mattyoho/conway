@@ -1,7 +1,9 @@
-class DeadCell
+module Conway
+  class DeadCell
 
-  def alive?
-    false
+    def alive?
+      false
+    end
+
   end
-
 end

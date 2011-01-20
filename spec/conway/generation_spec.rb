@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Conway
+
 describe Generation do
   let(:coordinates) { [Point.new(0,0), Point.new(1,1)] }
   let(:generation)  { Generation.new(coordinates) }

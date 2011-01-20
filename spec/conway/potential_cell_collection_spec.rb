@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Conway
+
 describe PotentialCellCollection do
   let(:live_cell)     { LiveCell.new }
   let(:point)         { Point.new(1,1) }

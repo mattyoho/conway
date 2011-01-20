@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe LiveCell do
+describe Conway::LiveCell do
 
   it "lives" do
-    LiveCell.new.should be_alive
+    Conway::LiveCell.new.should be_alive
   end
 end

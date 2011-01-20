@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Conway
+
 describe CellLocation do
   let(:cell_location) { CellLocation.new(LiveCell.new, Point.new(1,1)) }
 

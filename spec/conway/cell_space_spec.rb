@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Conway
+
 describe CellSpace do
   it "accepts a collection of points" do
     CellSpace.new [Point.new(0,0)]

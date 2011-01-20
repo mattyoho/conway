@@ -23,7 +23,7 @@ module ConwayAscii
   def self.parse_points(point_str)
     point_str.split(/\s|;|:/).map do |pt|
       x,y = pt.split(',').map {|d| d.to_i }
-      Point.new x,y
+      Conway::Point.new x,y
     end
   end
 

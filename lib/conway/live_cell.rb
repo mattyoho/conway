@@ -1,7 +1,9 @@
-class LiveCell
+module Conway
+  class LiveCell
 
-  def alive?
-    true
+    def alive?
+      true
+    end
+
   end
-
 end

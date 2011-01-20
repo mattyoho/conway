@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+include Conway
+
 describe Point do
   let(:point) { Point.new 1,2 }
 
