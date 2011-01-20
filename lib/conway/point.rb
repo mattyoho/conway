@@ -19,7 +19,7 @@ module Conway
     end
 
     def adjacents
-      grid = (-1..1).map do |j|
+      (-1..1).map do |j|
         (-1..1).map do |i|
           Point.new(x+i, y+j) unless i == 0 && j == 0
         end
