@@ -9,18 +9,24 @@ module Conway
         neighbors      = neighbors_for(cell_loc)
         neighbor_cells = neighbors.map {|n| n.cell }
 
-        new_cell = block.call(cell_loc.cell, neighbor_cells)
+        next_cell = block.call(cell_loc.cell, neighbor_cells)
 
-        new_location = CellLocation.new(new_cell, cell_loc.point)
-        potential_cell_locations[cell_loc.point] = new_location
+        if next_cell.alive?
+          live_cell_locations[cell_loc.point] = cell_loc
+        end
       end
     end
 
-    def live_cell_locations
-      potential_cell_locations.values.select{|loc| loc.cell.kind_of?(LiveCell) }
+    def live_cell_lookup
+      live_cell_locations
     end
 
     private
+
+    def live_cell_locations
+      @live_cell_locations ||= {}
+    end
+
     def potential_cell_locations
       @potential_cell_locations ||= Hash.new do |hash, point|
         CellLocation.new(DeadCell.new, point)

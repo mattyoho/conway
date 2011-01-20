@@ -9,7 +9,7 @@ module Conway
 
     def next
       cell_space = CellSpace.new(cell_coordinates)
-      new_coords = cell_space.apply(rule_set)
+      new_coords = cell_space.apply(rule_set).map{|loc| loc.point }
       Generation.new new_coords, rule_set
     end
   end

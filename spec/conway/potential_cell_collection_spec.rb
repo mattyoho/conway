@@ -5,7 +5,8 @@ include Conway
 describe PotentialCellCollection do
   let(:live_cell)     { LiveCell.new }
   let(:point)         { Point.new(1,1) }
-  let(:initial_cells) { [CellLocation.new(live_cell, point)] }
+  let(:cell_location) { CellLocation.new(live_cell, point) }
+  let(:initial_cells) { [cell_location] }
   let(:collection)    { PotentialCellCollection.new(initial_cells) }
 
   describe "#each_cell" do
@@ -18,11 +19,38 @@ describe PotentialCellCollection do
       yielded_cells.should include(live_cell)
     end
 
-    it "removes LiveCells that become DeadCells" do
-      collection.each_cell do |cell, neighbors|
-        DeadCell.new
+    context "when the cell is a LiveCell" do
+      it "does not retain the cell if it becomes a DeadCell" do
+        collection.each_cell do |cell, neighbors|
+          DeadCell.new
+        end
+        collection.live_cell_lookup.should be_empty
       end
-      collection.live_cell_locations.should be_empty
+
+      it "retains the cell if it remains a LiveCell" do
+        collection.each_cell do |cell, neighbors|
+          LiveCell.new
+        end
+        collection.live_cell_lookup.values.should include(cell_location)
+      end
+    end
+
+    context "when the cell is a DeadCell" do
+      let(:cell_location) { CellLocation.new(DeadCell.new, point) }
+
+      it "does not retain the cell if it remains a DeadCell" do
+        collection.each_cell do |cell, neighbors|
+          DeadCell.new
+        end
+        collection.live_cell_lookup.should be_empty
+      end
+
+      it "retains the cell if it remains a LiveCell" do
+        collection.each_cell do |cell, neighbors|
+          LiveCell.new
+        end
+        collection.live_cell_lookup.values.should include(cell_location)
+      end
     end
 
     context "neighbors" do
@@ -53,7 +81,13 @@ describe PotentialCellCollection do
       end
 
       it "includes all neighboring DeadCells" do
+        yielded_neighbors = nil
+        collection.each_cell do |cell, neighbors|
+          yielded_neighbors = neighbors
+          break
+        end
 
+        (yielded_neighbors - [neighbor_cell]).any?{|c| c.alive?}.should be_false
       end
     end
   end

@@ -8,7 +8,7 @@ module Conway
       potential_cells.each_cell do |cell, neighbors|
         rule_set.apply(cell, neighbors)
       end
-      potential_cells.live_cell_locations.map {|cell_loc| cell_loc.point }
+      potential_cells.live_cell_lookup.values
     end
 
     private
