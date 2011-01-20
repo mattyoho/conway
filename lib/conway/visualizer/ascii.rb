@@ -18,11 +18,6 @@ module Conway
         begin
           live_cells = generation.cell_coordinates
 
-          if live_cells.count == 0
-            puts "\nThey have all perished! D-:"
-            break
-          end
-
           grid = ""
           (1..max_y).each do |y|
             (1..max_x).each do |x|
@@ -41,6 +36,11 @@ module Conway
           grid << "Elapsed time: #{elapsed_minutes} min, #{elapsed_seconds} secs\n"
 
           yield grid if block_given?
+
+          if live_cells.count == 0
+            puts "\nThey have all perished! D-:"
+            break
+          end
 
           sleep(loop_interval)
         end while(generation = generation.next)
