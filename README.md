@@ -7,7 +7,7 @@ efficiency.
 Conway comes with a very simple ASCII visualizer. It can be invoked as
 below, where the size argument determines the dimensions of the cell grid:
 
-    conway --size 25 --cells="2,3 3,3 2,2 5,4 5,8 9,8, 7,6"
+    conway --size 25 --cells="10,2 9,3 8,3 9,4 10,4"
     conway -s 30 -c 2,3:3,3:3,2:2,2:3,4
 
 Please feel free to send feedback via the
