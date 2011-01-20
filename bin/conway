@@ -9,7 +9,7 @@ require 'conway/visualizer/ascii'
 
 PROGRAM_VERSION = 1
 
-module ConwayAscii
+module ConwayCli
   def self.suppress_warnings
     original_verbosity = $VERBOSE
     begin
@@ -33,7 +33,7 @@ module ConwayAscii
   end
 end
 
-ConwayAscii.suppress_warnings do
+ConwayCli.suppress_warnings do
   Choice.options do
     header 'Conway Game of Life ASCII visualizer'
     header 'Available options:'
@@ -61,14 +61,14 @@ ConwayAscii.suppress_warnings do
 end
 
 Signal.trap("TERM") do
-  ConwayAscii.exit
+  ConwayCli.exit
 end
 
 Signal.trap("INT") do
-  ConwayAscii.exit
+  ConwayCli.exit
 end
 
-live_points = ConwayAscii.parse_points Choice[:cells]
+live_points = ConwayCli.parse_points Choice[:cells]
 grid        = Conway::Visualizer::Ascii.new(Choice[:size], live_points)
 
 grid.loop do |step|

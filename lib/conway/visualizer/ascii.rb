@@ -16,9 +16,9 @@ module Conway
         puts "They live!!\n\n"
 
         begin
-          new_points = generation.cell_coordinates
+          live_cells = generation.cell_coordinates
 
-          if new_points.count == 0
+          if live_cells.count == 0
             puts "\nThey have all perished! D-:"
             break
           end
@@ -26,7 +26,7 @@ module Conway
           grid = ""
           (1..max_y).each do |y|
             (1..max_x).each do |x|
-              cell_char = cell_content_for(new_points, x,y)
+              cell_char = cell_content_for(live_cells, x,y)
               grid << "|#{cell_char}"
             end
             grid << "|\n"
@@ -34,8 +34,8 @@ module Conway
 
           grid << "\n"
 
-          grid <<  "Total objects: #{ObjectSpace.count_objects[:TOTAL]} "
-          grid <<  "Total LiveCells: #{new_points.count}\n"
+          grid <<  "Total objects: #{live_object_count} "
+          grid <<  "Total living cells: #{live_cells.count}\n"
 
           elapsed_minutes, elapsed_seconds = ((Time.now - start).to_i).divmod 60
           grid << "Elapsed time: #{elapsed_minutes} min, #{elapsed_seconds} secs\n"
@@ -50,7 +50,19 @@ module Conway
       attr_accessor :max_x, :max_y, :starting_cells, :loop_interval
 
       def cell_content_for(points, x,y)
-        points.detect {|p| p.x == x && p.y == y } ? "X" : " "
+        @comparison_point ||= Point.new(x,y)
+        @comparison_point.update(x,y)
+        points.detect {|p| p == @comparison_point } ? "X" : " "
+      end
+
+      def live_object_count
+        if ObjectSpace.respond_to?(:count_objects)
+          # Ruby 1.9.2
+          ObjectSpace.count_objects[:TOTAL]
+        else
+          # Ruby 1.8.7
+          ObjectSpace.live_objects
+        end
       end
     end
   end
