@@ -21,6 +21,7 @@ module Conway
     def update(x, y)
       self.x = x
       self.y = y
+      self
     end
 
     def adjacents

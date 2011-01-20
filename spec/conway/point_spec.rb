@@ -42,6 +42,10 @@ describe Point do
       point.x.should eql(1)
       point.y.should eql(3)
     end
+
+    it "returns self" do
+      point.update(4,2).should equal(point)
+    end
   end
 end
 
