@@ -1,0 +1,76 @@
+#!/usr/bin/env ruby
+
+# Useful for running the script from the project directory
+lib_dir = File.join(File.dirname(__FILE__), '..', 'lib')
+$LOAD_PATH.unshift lib_dir if File.directory?(lib_dir)
+
+require 'choice'
+require 'conway/visualizer/ascii'
+
+PROGRAM_VERSION = 1
+
+module ConwayAscii
+  def self.suppress_warnings
+    original_verbosity = $VERBOSE
+    begin
+      $VERBOSE = nil
+      yield
+    ensure
+      $VERBOSE = original_verbosity
+    end
+  end
+
+  def self.parse_points(point_str)
+    point_str.split(/\s|;|:/).map do |pt|
+      x,y = pt.split(',').map {|d| d.to_i }
+      Point.new x,y
+    end
+  end
+
+  def self.exit
+    puts "\nExiting...\n"
+    Kernel::exit
+  end
+end
+
+ConwayAscii.suppress_warnings do
+  Choice.options do
+    header 'Conway Game of Life ASCII visualizer'
+    header 'Available options:'
+
+    option :size do
+      short '-s'
+      long  '--size=SIZE'
+      desc  'The size of the game grid, specified as the length of one side'
+      cast  Integer
+      default 30
+    end
+
+    option :cells do
+      short '-c'
+      long  '--cells=CELLS'
+      desc  'Starting points for live cells, comma-seperated x,y pairs, seperated by spaces, colons, or semicolons'
+      default '1,2 2,1'
+    end
+
+    option :help do
+      long  '--help'
+      desc  'Print this help message'
+    end
+  end
+end
+
+Signal.trap("TERM") do
+  ConwayAscii.exit
+end
+
+Signal.trap("INT") do
+  ConwayAscii.exit
+end
+
+live_points = ConwayAscii.parse_points Choice[:cells]
+grid        = Conway::Visualizer::Ascii.new(Choice[:size], live_points)
+
+grid.loop do |step|
+  puts step
+end
