@@ -34,5 +34,14 @@ describe Point do
       point.adjacents.should == neighbors
     end
   end
+
+  describe "#update" do
+    let(:point) { Point.new(2,2) }
+    it "updates the x and y points" do
+      point.update(1,3)
+      point.x.should eql(1)
+      point.y.should eql(3)
+    end
+  end
 end
 
