@@ -4,7 +4,7 @@ module Conway
   module Driver
     class Ascii
       def initialize(size, starting_cells, loop_interval=0.25)
-        self.max_x = self.max_y = size
+        self.max_x          = self.max_y = size
         self.starting_cells = starting_cells
         self.loop_interval  = loop_interval
       end
@@ -16,28 +16,17 @@ module Conway
         puts "They live!!\n\n"
 
         begin
-          live_cells = generation.cell_coordinates
+          lookup = generation.location_lookup
 
-          grid = ""
-          (1..max_y).each do |y|
-            (1..max_x).each do |x|
-              cell_char = cell_content_for(live_cells, x,y)
-              grid << "|#{cell_char}"
-            end
-            grid << "|\n"
-          end
+          grid =  generate_grid(lookup)
 
-          grid << "\n"
+          grid << current_stats(lookup)
+          grid << elapsed_time_since(start)
 
-          grid <<  "Total objects: #{live_object_count} "
-          grid <<  "Total living cells: #{live_cells.count}\n"
-
-          elapsed_minutes, elapsed_seconds = ((Time.now - start).to_i).divmod 60
-          grid << "Elapsed time: #{elapsed_minutes} min, #{elapsed_seconds} secs\n"
 
           yield grid if block_given?
 
-          if live_cells.count == 0
+          if lookup.empty?
             puts "\nThey have all perished! D-:"
             break
           end
@@ -49,10 +38,30 @@ module Conway
       private
       attr_accessor :max_x, :max_y, :starting_cells, :loop_interval
 
-      def cell_content_for(points, x,y)
-        @comparison_point ||= Point.new(x,y)
-        @comparison_point.update(x,y)
-        points.detect {|p| p == @comparison_point } ? "X" : " "
+      def generate_grid(lookup)
+        grid = ""
+        (1..max_y).each do |y|
+          (1..max_x).each do |x|
+            cell_char = cell_content_for(lookup, x, y)
+            grid << "|#{cell_char}"
+          end
+          grid << "|\n"
+        end
+        grid
+      end
+
+      def cell_content_for(lookup, x,y)
+        lookup.retrieve(x,y) ? "X" : " "
+      end
+
+      def current_stats(lookup)
+        stats =  "Total objects: #{live_object_count} "
+        stats << "Total living cells: #{lookup.count}\n"
+      end
+
+      def elapsed_time_since(start)
+        elapsed_minutes, elapsed_seconds = ((Time.now - start).to_i).divmod 60
+        "Elapsed time: #{elapsed_minutes} min, #{elapsed_seconds} secs\n"
       end
 
       def live_object_count
