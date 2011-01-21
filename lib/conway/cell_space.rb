@@ -1,23 +1,21 @@
 module Conway
   class CellSpace
-    def initialize(points)
-      self.potential_cells = PotentialCellCollection.new(live_locations(points))
+    def initialize(locations)
+      self.potential_cells = PotentialCellCollection.new(locations)
     end
 
     def apply(rule_set)
-      potential_cells.each_cell do |cell, neighbors|
-        rule_set.apply(cell, neighbors)
+      live_cell_lookup = CellLocationLookup.new
+      potential_cells.each_location do |location, neighbors|
+        cell = rule_set.apply(location.cell, neighbors.map{|n| n.cell })
+        if cell.alive?
+          live_cell_lookup.insert(CellLocation.new(cell, location.point))
+        end
       end
-      potential_cells.live_cell_lookup
+      live_cell_lookup
     end
 
     private
     attr_accessor :potential_cells
-
-    def live_locations(points)
-      points.map do |point|
-        CellLocation.new(LiveCell.new, point)
-      end
-    end
   end
 end

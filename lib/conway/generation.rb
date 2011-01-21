@@ -8,7 +8,7 @@ module Conway
     end
 
     def next
-      cell_space   = CellSpace.new(cell_coordinates)
+      cell_space   = CellSpace.new(location_lookup.locations)
       cell_lookup  = cell_space.apply(rule_set)
       Generation.new cell_lookup, rule_set
     end

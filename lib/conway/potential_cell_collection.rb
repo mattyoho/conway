@@ -1,30 +1,22 @@
 module Conway
   class PotentialCellCollection
-    attr_reader :live_cell_lookup
-
     def initialize(live_locations)
-      self.live_cell_lookup      = CellLocationLookup.new
       self.potential_cell_lookup = CellLocationLookup.new
       self.default_dead_cell     = DeadCell.new
 
       identify_potential_locations(live_locations)
     end
 
-    def each_cell(&block)
+    def each_location(&block)
       potential_cell_lookup.each do |cell_location|
-        neighbor_cells = neighbor_cells_for(cell_location)
+        neighbor_locations = neighbors_for(cell_location)
 
-        next_cell = block.call(cell_location.cell, neighbor_cells)
-
-        if next_cell.alive?
-          live_cell_lookup.insert(cell_location)
-        end
+        block.call(cell_location, neighbor_locations)
       end
     end
 
     private
     attr_accessor :potential_cell_lookup, :default_dead_cell
-    attr_writer   :live_cell_lookup
 
     def identify_potential_locations(locations)
       locations.each do |loc|
