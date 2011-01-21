@@ -11,11 +11,6 @@ describe Generation do
       expect { generation.next }.to_not raise_error
     end
 
-    it "accepts an array of CellLocations" do
-      generation = Generation.new([CellLocation.new(LiveCell.new, Point.new(1,1))])
-      expect { generation.next }.to_not raise_error
-    end
-
     it "accepts a CellLocationLookup" do
       generation = Generation.new(CellLocationLookup.new)
       expect { generation.next }.to_not raise_error

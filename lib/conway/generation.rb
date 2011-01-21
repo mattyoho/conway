@@ -21,12 +21,12 @@ module Conway
     attr_accessor :rule_set
     attr_writer   :location_lookup
 
-    def normalize_to_lookup(locations)
-      return locations unless locations.kind_of?(Array)
+    def normalize_to_lookup(points)
+      return points unless points.kind_of?(Array)
 
       lookup = CellLocationLookup.new
-      locations.each do |loc|
-        loc = point_to_location(loc) if loc.kind_of?(Point)
+      points.each do |point|
+        loc = point_to_location(point)
         lookup.insert(loc)
       end
 
