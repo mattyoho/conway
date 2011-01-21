@@ -31,7 +31,7 @@ describe PotentialCellCollection do
         collection.each_cell do |cell, neighbors|
           LiveCell.new
         end
-        collection.live_cell_lookup.values.should include(cell_location)
+        collection.live_cell_lookup.locations.should include(cell_location)
       end
     end
 
@@ -49,7 +49,7 @@ describe PotentialCellCollection do
         collection.each_cell do |cell, neighbors|
           LiveCell.new
         end
-        collection.live_cell_lookup.values.should include(cell_location)
+        collection.live_cell_lookup.locations.should include(cell_location)
       end
     end
 

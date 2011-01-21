@@ -15,5 +15,21 @@ module Conway
       end
       @hash[point_or_x]
     end
+
+    def locations
+      @hash.values
+    end
+
+    def count
+      locations.count
+    end
+
+    def empty?
+      !(count > 0)
+    end
+
+    def each(&block)
+      locations.each(&block)
+    end
   end
 end
