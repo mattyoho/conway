@@ -1,7 +1,7 @@
 require "conway"
 
 module Conway
-  module Visualizer
+  module Driver
     class Ascii
       def initialize(size, starting_cells, loop_interval=0.25)
         self.max_x = self.max_y = size

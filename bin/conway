@@ -5,7 +5,7 @@ lib_dir = File.join(File.dirname(__FILE__), '..', 'lib')
 $LOAD_PATH.unshift lib_dir if File.directory?(lib_dir)
 
 require 'choice'
-require 'conway/visualizer/ascii'
+require 'conway/driver/ascii'
 
 PROGRAM_VERSION = 1
 
@@ -69,7 +69,7 @@ Signal.trap("INT") do
 end
 
 live_points = ConwayCli.parse_points Choice[:cells]
-grid        = Conway::Visualizer::Ascii.new(Choice[:size], live_points)
+grid        = Conway::Driver::Ascii.new(Choice[:size], live_points)
 
 grid.loop do |step|
   puts step
