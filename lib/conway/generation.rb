@@ -2,8 +2,8 @@ module Conway
   class Generation
     attr_reader :location_lookup
 
-    def initialize(cell_locations, rule_set=RuleSet.new)
-      self.location_lookup = normalize_to_lookup cell_locations
+    def initialize(points_or_lookup, rule_set=RuleSet.new)
+      self.location_lookup = normalize_to_lookup points_or_lookup
       self.rule_set        = rule_set
     end
 
