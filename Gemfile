@@ -1,6 +1,7 @@
 source "http://rubygems.org"
 
 gem 'rake',     '= 0.8.7'
+gem 'choice',   '= 0.1.4'
 
 group :development do
   gem 'watchr',       '~> 0.7'

@@ -14,3 +14,7 @@ Cucumber::Rake::Task.new(:cucumber) do |t|
 end
 
 task :default => [:spec, :cucumber]
+
+task :glider do
+  system('./bin/conway --cells="10,2 9,3 8,3 9,4 10,4"')
+end

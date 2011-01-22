@@ -3,6 +3,7 @@ GEM
   specs:
     archive-tar-minitar (0.5.2)
     builder (3.0.0)
+    choice (0.1.4)
     columnize (0.3.2)
     cucumber (0.10.0)
       builder (>= 2.1.2)
@@ -48,6 +49,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  choice (= 0.1.4)
   cucumber (~> 0.10.0)
   rake (= 0.8.7)
   rspec (~> 2.4.0)
