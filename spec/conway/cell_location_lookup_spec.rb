@@ -8,6 +8,15 @@ describe CellLocationLookup do
   let(:location) { CellLocation.new cell, point }
   let(:lookup)   { CellLocationLookup.new }
 
+  describe "#initialize" do
+    context "given a block" do
+      it "uses the block for default returns from #retrieve" do
+        lookup = CellLocationLookup.new {|p| "Point: (#{p.x},#{p.y})" }
+        lookup.retrieve(point).should eql("Point: (1,1)")
+      end
+    end
+  end
+
   describe "#insert" do
     it "accepts a CellLocation" do
       lookup.insert location

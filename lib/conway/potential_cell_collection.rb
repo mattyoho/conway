@@ -1,7 +1,9 @@
 module Conway
   class PotentialCellCollection
     def initialize(live_locations)
-      self.potential_cell_lookup = CellLocationLookup.new
+      self.potential_cell_lookup = CellLocationLookup.new do |point|
+        dead_cell_location(point)
+      end
 
       identify_potential_locations(live_locations)
     end
@@ -36,7 +38,7 @@ module Conway
 
     def neighbors_for(location)
       location.adjacent_points.map do |point|
-        potential_cell_lookup.retrieve(point) || dead_cell_location(point)
+        potential_cell_lookup.retrieve(point)
       end
     end
 

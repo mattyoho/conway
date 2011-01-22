@@ -1,7 +1,7 @@
 module Conway
   class CellLocationLookup
-    def initialize
-      @hash  ||= {}
+    def initialize(&block)
+      @hash  ||= block_given? ? Hash.new {|h,p| yield p } : {}
       @point ||= Point.new(0,0)
     end
 
