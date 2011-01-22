@@ -28,22 +28,18 @@ module Conway
       end
     end
 
-    def dead_cell_location(point)
-      CellLocation.new(default_dead_cell, point)
-    end
-
-    def default_dead_cell
-      @dead_cell ||= DeadCell.new
-    end
-
     def neighbors_for(location)
       location.adjacent_points.map do |point|
         potential_cell_lookup.retrieve(point)
       end
     end
 
-    def neighbor_cells_for(location)
-      neighbors_for(location).map {|n| n.cell }
+    def dead_cell_location(point)
+      CellLocation.new(default_dead_cell, point)
+    end
+
+    def default_dead_cell
+      @dead_cell ||= DeadCell.new
     end
   end
 end
