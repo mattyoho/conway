@@ -2,7 +2,6 @@ module Conway
   class PotentialCellCollection
     def initialize(live_locations)
       self.potential_cell_lookup = CellLocationLookup.new
-      self.default_dead_cell     = DeadCell.new
 
       identify_potential_locations(live_locations)
     end
@@ -16,7 +15,7 @@ module Conway
     end
 
     private
-    attr_accessor :potential_cell_lookup, :default_dead_cell
+    attr_accessor :potential_cell_lookup
 
     def identify_potential_locations(locations)
       locations.each do |loc|
@@ -29,6 +28,10 @@ module Conway
 
     def dead_cell_location(point)
       CellLocation.new(default_dead_cell, point)
+    end
+
+    def default_dead_cell
+      @dead_cell ||= DeadCell.new
     end
 
     def neighbors_for(location)
