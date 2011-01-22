@@ -5,7 +5,7 @@ module Conway
         dead_cell_location(point)
       end
 
-      identify_potential_locations(live_locations)
+      insert_potential_locations(live_locations)
     end
 
     def each_location(&block)
@@ -19,7 +19,7 @@ module Conway
     private
     attr_accessor :potential_cell_lookup
 
-    def identify_potential_locations(locations)
+    def insert_potential_locations(locations)
       locations.each do |loc|
         potential_cell_lookup.insert(loc)
         neighbors_for(loc).each do |neighbor|
