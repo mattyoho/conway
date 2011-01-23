@@ -11,17 +11,17 @@ describe CellSpace do
     let(:cell)     { LiveCell.new }
     let(:location) { CellLocation.new(cell, Point.new(0,0)) }
     let(:space)    { CellSpace.new [location] }
-    let(:rule_set) { RuleSet.new }
+    let(:rules)    { Rules.new }
 
     it "returns a CellLocationLookup" do
-      space.apply(rule_set).should be_a_kind_of(CellLocationLookup)
+      space.apply(rules).should be_a_kind_of(CellLocationLookup)
     end
 
-    context "when the RuleSet gives a LiveCell" do
-      let(:rule_set) { stub(:apply => LiveCell.new) }
+    context "when the Rules gives a LiveCell" do
+      let(:rules) { stub(:apply => LiveCell.new) }
 
       it "retains the cell" do
-        live_cell_lookup = space.apply(rule_set)
+        live_cell_lookup = space.apply(rules)
         locations        = live_cell_lookup.locations
 
         locations.should have(9).locations
@@ -30,12 +30,12 @@ describe CellSpace do
       end
     end
 
-    context "when the RuleSet gives a DeadCell" do
+    context "when the Rules gives a DeadCell" do
       let(:cell_location) { CellLocation.new(DeadCell.new, point) }
-      let(:rule_set) { stub(:apply => DeadCell.new) }
+      let(:rules)         { stub(:apply => DeadCell.new) }
 
       it "does not retain the cell" do
-        live_cell_lookup = space.apply(rule_set)
+        live_cell_lookup = space.apply(rules)
         live_cell_lookup.should be_empty
       end
     end

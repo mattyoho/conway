@@ -4,9 +4,9 @@ module Conway
       self.potential_cells = PotentialCellCollection.new(locations)
     end
 
-    def apply(rule_set, live_cell_lookup = CellLocationLookup.new)
+    def apply(rules, live_cell_lookup = CellLocationLookup.new)
       potential_cells.each_location do |location, neighbors|
-        cell = rule_set.apply(location.cell, neighbors.map{|n| n.cell })
+        cell = rules.apply(location.cell, neighbors.map{|n| n.cell })
         if cell.alive?
           live_cell_lookup.insert(CellLocation.new(cell, location.point))
         end

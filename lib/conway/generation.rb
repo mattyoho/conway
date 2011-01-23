@@ -2,15 +2,15 @@ module Conway
   class Generation
     attr_reader :location_lookup
 
-    def initialize(points_or_lookup, rule_set=RuleSet.new)
+    def initialize(points_or_lookup, rules=Rules.new)
       self.location_lookup = normalize_to_lookup points_or_lookup
-      self.rule_set        = rule_set
+      self.rules           = rules
     end
 
     def next
       cell_space   = CellSpace.new(location_lookup.locations)
-      cell_lookup  = cell_space.apply(rule_set)
-      Generation.new cell_lookup, rule_set
+      cell_lookup  = cell_space.apply(rules)
+      Generation.new cell_lookup, rules
     end
 
     def cell_coordinates
@@ -18,7 +18,7 @@ module Conway
     end
 
     private
-    attr_accessor :rule_set
+    attr_accessor :rules
     attr_writer   :location_lookup
 
     def normalize_to_lookup(points)
