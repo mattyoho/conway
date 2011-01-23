@@ -4,6 +4,7 @@ module Conway
   class Rules
     class UnderPopulation
       include Conway::Rules::LiveCount
+      include Conway::MemoizedCells
 
       def apply(cell, neighbors)
         count = live_count(neighbors)
@@ -14,10 +15,6 @@ module Conway
 
       def less_than_two?(count)
         count < 2
-      end
-
-      def dead_cell
-        @dead_cell ||= DeadCell.new
       end
     end
   end
