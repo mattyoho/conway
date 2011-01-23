@@ -2,7 +2,7 @@ module Conway
   class PotentialCellCollection
     def initialize(live_locations)
       self.potential_cell_lookup = CellLocationLookup.new do |point|
-        dead_cell_location(point)
+        CellLocation.new(default_dead_cell, point)
       end
 
       insert_potential_locations(live_locations)
@@ -32,10 +32,6 @@ module Conway
       location.adjacent_points.map do |point|
         potential_cell_lookup.retrieve(point)
       end
-    end
-
-    def dead_cell_location(point)
-      CellLocation.new(default_dead_cell, point)
     end
 
     def default_dead_cell
