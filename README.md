@@ -8,7 +8,7 @@ optimizing the efficiency of the algorithm.
 Conway comes with a very simple ASCII visualizer. It can be invoked as
 below, where the size argument determines the dimensions of the cell grid:
 
-    conway --size 25 --cells="10,2 9,3 8,3 9,4 10,4"
+    conway --size 25 --cells="10,2 9,3 8,3 9,4 10,4" --stats
     conway -s 30 -c 2,3:3,3:3,2:2,2:3,4
 
 When playing with the code itself, there's a sanity check Rake task:
