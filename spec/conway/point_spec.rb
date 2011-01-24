@@ -33,6 +33,12 @@ describe Point do
     it "returns the eight adjacent points" do
       point.adjacents.should == neighbors
     end
+
+    it "memoizes the points" do
+      point.adjacents
+      Point.should_receive(:new).never
+      point.adjacents
+    end
   end
 
   describe "#update" do
@@ -45,6 +51,13 @@ describe Point do
 
     it "returns self" do
       point.update(4,2).should equal(point)
+    end
+
+    it "clears the adjacents cache" do
+      point.adjacents
+      point.instance_variable_get("@adjacents").should_not be_nil
+      point.update(0, 0)
+      point.instance_variable_get("@adjacents").should be_nil
     end
   end
 end

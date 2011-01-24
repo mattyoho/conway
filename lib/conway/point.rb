@@ -19,12 +19,15 @@ module Conway
     end
 
     def update(x, y)
-      self.x = x
-      self.y = y
+      self.x     = x
+      self.y     = y
+      @adjacents = nil
+
       self
     end
 
     def adjacents
+      @adjacents ||=
       (-1..1).map do |j|
         (-1..1).map do |i|
           Point.new(x+i, y+j) unless i == 0 && j == 0
