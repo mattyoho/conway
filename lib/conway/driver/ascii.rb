@@ -3,10 +3,10 @@ require "conway"
 module Conway
   module Driver
     class Ascii
-      def initialize(size, starting_cells, loop_interval=0.25)
+      def initialize(size, starting_cells, options={})
         self.max_x          = self.max_y = size
         self.starting_cells = starting_cells
-        self.loop_interval  = loop_interval
+        self.options        = {:loop_interval => 0.25}.merge(options)
       end
 
       def loop
@@ -20,9 +20,10 @@ module Conway
 
           grid =  generate_grid(lookup)
 
-          grid << current_stats(lookup)
-          grid << elapsed_time_since(start)
-
+          if options[:display_stats]
+            grid << current_stats(lookup)
+            grid << elapsed_time_since(start)
+          end
 
           yield grid if block_given?
 
@@ -31,12 +32,12 @@ module Conway
             break
           end
 
-          sleep(loop_interval)
+          sleep(options[:loop_interval])
         end while(generation = generation.next)
       end
 
       private
-      attr_accessor :max_x, :max_y, :starting_cells, :loop_interval
+      attr_accessor :max_x, :max_y, :starting_cells, :options
 
       def generate_grid(lookup)
         grid = ""

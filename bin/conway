@@ -46,6 +46,13 @@ ConwayCli.suppress_warnings do
       default 30
     end
 
+    option :stats do
+      short '-S'
+      long  '--stats'
+      desc  'Display object count and elapsed time'
+      default false
+    end
+
     option :cells do
       short '-c'
       long  '--cells=CELLS'
@@ -69,7 +76,7 @@ Signal.trap("INT") do
 end
 
 live_points = ConwayCli.parse_points Choice[:cells]
-grid        = Conway::Driver::Ascii.new(Choice[:size], live_points)
+grid        = Conway::Driver::Ascii.new(Choice[:size], live_points, :display_stats => Choice[:stats])
 
 grid.loop do |step|
   puts step
