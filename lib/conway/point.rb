@@ -1,6 +1,6 @@
 module Conway
   class Point
-    attr_reader :x, :y
+    attr_accessor :x, :y
 
     def initialize(x=0,y=0)
       self.x, self.y = x,y
@@ -35,7 +35,5 @@ module Conway
       end.flatten.compact
     end
 
-    protected
-    attr_writer :x, :y
   end
 end

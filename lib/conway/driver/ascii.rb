@@ -3,6 +3,8 @@ require "conway"
 module Conway
   module Driver
     class Ascii
+      attr_accessor :max_x, :max_y, :starting_cells, :options
+
       def initialize(size, starting_cells, options={})
         self.max_x          = self.max_y = size
         self.starting_cells = starting_cells
@@ -37,7 +39,6 @@ module Conway
       end
 
       private
-      attr_accessor :max_x, :max_y, :starting_cells, :options
 
       def generate_grid(lookup)
         grid = ""

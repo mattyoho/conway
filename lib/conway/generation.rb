@@ -1,6 +1,6 @@
 module Conway
   class Generation
-    attr_reader :location_lookup
+    attr_accessor :location_lookup, :rules
 
     def initialize(points_or_lookup, rules=Rules.new)
       self.location_lookup = normalize_to_lookup points_or_lookup
@@ -18,8 +18,6 @@ module Conway
     end
 
     private
-    attr_accessor :rules
-    attr_writer   :location_lookup
 
     def normalize_to_lookup(points)
       return points unless points.kind_of?(Array)

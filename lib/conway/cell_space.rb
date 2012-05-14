@@ -1,5 +1,7 @@
 module Conway
   class CellSpace
+    attr_accessor :potential_cells
+
     def initialize(locations)
       self.potential_cells = PotentialCellCollection.new(locations)
     end
@@ -14,7 +16,5 @@ module Conway
       live_cell_lookup
     end
 
-    private
-    attr_accessor :potential_cells
   end
 end

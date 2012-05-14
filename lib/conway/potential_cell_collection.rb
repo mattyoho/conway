@@ -2,6 +2,8 @@ module Conway
   class PotentialCellCollection
     include Conway::MemoizedCells
 
+    attr_accessor :potential_cell_lookup
+
     def initialize(live_locations)
       self.potential_cell_lookup = CellLocationLookup.new do |point|
         CellLocation.new(dead_cell, point)
@@ -19,7 +21,6 @@ module Conway
     end
 
     private
-    attr_accessor :potential_cell_lookup
 
     def insert_potential_locations(locations)
       locations.each do |loc|

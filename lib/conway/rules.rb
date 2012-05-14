@@ -6,6 +6,8 @@ require 'conway/rules/default'
 
 module Conway
   class Rules
+    attr_accessor :rules
+
     def initialize(rules=[UnderPopulation.new,
                           Stability.new,
                           OverPopulation.new,
@@ -21,7 +23,5 @@ module Conway
       end
     end
 
-    private
-    attr_accessor :rules
   end
 end

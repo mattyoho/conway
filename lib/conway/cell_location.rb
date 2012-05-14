@@ -1,10 +1,10 @@
 module Conway
   class CellLocation
-    attr_reader :cell, :point
+    attr_accessor :cell, :point
 
     def initialize(cell, point)
-      @cell  = cell
-      @point = point
+      self.cell  = cell
+      self.point = point
     end
 
     def adjacent_points
