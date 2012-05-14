@@ -10,9 +10,8 @@ module Conway
     end
 
     def retrieve(point_or_x, y=nil)
-      if y
-        point_or_x = @point.update(point_or_x, y)
-      end
+      point_or_x = @point.update(point_or_x, y) if y
+
       @hash[point_or_x]
     end
 
