@@ -1,5 +1,9 @@
+require 'conway/memoized_cells'
+
 module Conway
   class Generation
+    include Conway::MemoizedCells
+
     attr_accessor :location_lookup, :rules
 
     def initialize(points_or_lookup, rules=Rules.new)
@@ -32,8 +36,7 @@ module Conway
     end
 
     def point_to_location(point)
-      @live_cell ||= LiveCell.new
-      CellLocation.new(@live_cell, point)
+      CellLocation.new(live_cell, point)
     end
   end
 end
